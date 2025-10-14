@@ -1,3 +1,5 @@
+our domain is paybillswithuscom on godaady
+
 ChatGPT said:
 🌐 US Bills Hub — Simple Static Website (No Login, No Admin, No Records)
 
