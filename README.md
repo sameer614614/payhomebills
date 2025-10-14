@@ -1,243 +1,99 @@
-1. 📜 Project Overview
-For Users
-
-Browse 4 categories: Internet, Home, TV, Electric
-
-View major billers by ZIP code and their plan details
-
-See 25% OFF eligibility
-
-Call toll-free number to enroll or request callback
-
-After phone verification, admin assigns them a unique Customer Number
-
-View bills, discount summary, and uploaded receipts (PDF/JPG)
-
-For Admins
-
-Manage billers and plans
-
-View all registered customers
-
-Add/update monthly bills
-
-Upload receipts to Firebase Storage (linked by Customer Number)
-
-Update status or notes per bill
-
-2. 🧩 Tech Stack
-Layer	Technology	Description
-Frontend	Vite + React + Tailwind	Responsive UI, React Router, Axios
-Backend	Node.js + Express	REST API hosted on VPS
-Database	Firebase Firestore	Persistent data for customers, billers, bills
-File Storage	Firebase Storage	Stores receipts and logos
-Auth	JWT-based	Handled via Express middleware
-Deployment	GoDaddy VPS (Ubuntu)	Nginx reverse proxy + PM2 process manager
-3. 🌍 System Architecture
-React (Vite)
-   ↓  Axios
-Express API (VPS)
-   ↓
-Firebase Firestore (database)
-   ↓
-Firebase Storage (receipts)
-
-4. 🗂️ Firestore Schema
-/billers/{billerId}
-{
-  "name": "FiberFast Internet",
-  "category": "internet",
-  "logoUrl": "https://cdn.usbillshub.com/fiberfast.png",
-  "plans": [
-    { "id": "plan100", "name": "100 Mbps", "monthlyPrice": 59.99, "eligibleForDiscount": true }
-  ],
-  "coverageZips": ["10001","10002"],
-  "createdAt": "timestamp"
-}
+ChatGPT said:
+🌐 US Bills Hub — Simple Static Website (No Login, No Admin, No Records)
 
-/customers/{customerId}
-{
-  "customerNumber": "CUS-2025-0042",
-  "name": "John Smith",
-  "email": "john@example.com",
-  "zipCode": "10001",
-  "enrolledBillers": [
-    { "billerId": "fiberfast", "planId": "plan100", "startDate": "2025-10-01" }
-  ],
-  "createdAt": "timestamp"
-}
-
-/customers/{customerId}/bills/{billId}
-{
-  "billerId": "fiberfast",
-  "period": "2025-11",
-  "amountBeforeDiscount": 59.99,
-  "discountPercent": 25,
-  "amountAfterDiscount": 44.99,
-  "note": "Paid on call",
-  "createdBy": "adminId",
-  "createdAt": "timestamp"
-}
-
-/customers/{customerId}/bills/{billId}/receipts/{receiptId}
-{
-  "fileName": "receipt_november.pdf",
-  "storagePath": "receipts/CUS-2025-0042/november.pdf",
-  "uploadedBy": "adminId",
-  "uploadedAt": "timestamp"
-}
-
-5. 🧾 REST API Design (Express)
-Base URL
-https://<your-vps-domain>/api
+Goal: Build a modern, responsive promotional website where U.S. users can explore bill categories — Internet, Home, TV, and Electric — view major providers, and be encouraged to call the toll-free number to get 25% off every month.
 
-Auth Routes
-Method	Endpoint	Description
-POST	/auth/register	Create new customer account
-POST	/auth/login	Login and get JWT
-GET	/auth/me	Get user info from JWT
-Biller Routes
-Method	Endpoint	Description
-GET	/billers	List all billers or filter by category
-POST	/billers	Create new biller (admin only)
-PUT	/billers/:id	Update biller info (admin only)
-DELETE	/billers/:id	Remove biller (admin only)
-Customer Routes
-Method	Endpoint	Description
-GET	/customers/:id	Get customer info
-PUT	/customers/:id	Update profile (admin only)
-GET	/customers/:id/bills	Fetch bill history
-POST	/customers/:id/bills	Add a new bill (admin only)
-POST	/customers/:id/bills/:billId/receipt	Upload receipt (admin only)
-6. 🔐 Authentication (JWT)
+No registration, login, or admin panel.
+No database writes or backend logic except for static content (you’ll record everything manually in your books).
 
-Login Flow
+The site’s purpose is purely marketing and lead-generation — clear, fast, attractive, and mobile-friendly.
 
-User registers → backend hashes password and stores in Firestore /customers
 
-Login → backend verifies credentials and issues JWT
+1. Project Summary
 
-Client stores JWT in localStorage
+Show 4 main categories:
 
-Protected routes (admin dashboard, account) require JWT in header:
+Internet Bills
 
-Authorization: Bearer <token>
+Home Services
 
-7. 💾 Firebase Storage
+TV & Cable
 
-Paths:
+Electric Bills
 
-receipts/{customerNumber}/{billId}/{filename}
-logos/{billerId}/{filename}
+For each category:
 
+Display logos & plan highlights of major U.S. carriers (Comcast, AT&T, Verizon, Spectrum, etc.)
 
-Uploads:
-Handled by Express backend using Firebase Admin SDK:
+Show pricing and “25% OFF” badge
 
-const storage = getStorage();
-await uploadBytes(storageRef, fileBuffer, { contentType });
+Prominent “Call Toll-Free Now” button
 
-8. 🖥️ Admin Dashboard Features
+Simple static content — no payment forms, no database forms, no registration.
 
-Add/Edit billers
+Site includes:
 
-Assign customer plans
+Hero banner
 
-Add monthly bills
+Category tabs
 
-Upload receipts (PDF/JPG)
+Provider cards grid
 
-View/download receipts from Firebase Storage
+Toll-free section (call-to-action)
 
-Search customers by name, email, or Customer Number
+FAQs and contact footer
 
-9. ⚙️ Environment Setup
-Backend .env
-PORT=8080
-JWT_SECRET=your_jwt_secret
-FIREBASE_PROJECT_ID=your_project_id
-FIREBASE_CLIENT_EMAIL=your_service_account_email
-FIREBASE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----..."
+🛠️ 2. Tech Stack
+Layer	Tech	Notes
+Frontend	Vite + React + TypeScript	Fast, modular SPA
+Styling	Tailwind CSS + shadcn/ui (optional)	Modern, responsive design
+Hosting	GoDaddy VPS	Serve static files via Nginx
+Assets	Local /public folder	Store images/logos locally
+No backend	—	Static build only (no Express, no database yet)
 
-Frontend .env
-VITE_API_BASE=https://your-vps-domain/api
-VITE_APP_NAME="US Bills Hub"
-VITE_TOLL_FREE="+1-800-555-9999"
 
-10. 🛠️ Setup Commands
-Frontend
-npm create vite@latest us-bills-hub -- --template react-ts
-cd us-bills-hub
-npm install tailwindcss axios react-router-dom
-npm run dev
 
-Backend
-mkdir backend && cd backend
-npm init -y
-npm install express cors firebase-admin jsonwebtoken multer
-node server.js
+🏗️ 3. Folder Structure
+🖥️ 4. Page Layouts
+📞 5. Toll-Free Call-to-Action Block
+⚙️ 6. Environment Variables (if any)
+🚀 7. Deployment on GoDaddy VPS
 
-VPS Deployment
-sudo apt update
-sudo apt install nginx
-sudo npm install -g pm2
-pm2 start server.js
+8. Example Homepage Text
 
+Headline:
 
-Configure Nginx reverse proxy for port 80 → 8080.
+“Pay Your Monthly Bills the Smart Way — Get 25% OFF everymonth on Internet, Home, TV, and Electric Bills!”
 
-11. 📞 Toll-Free Enrollment Page (/enroll)
+Sub-text:
 
-Prominently show:
+“We handle your bill payments so you save more every month.
+Call us now at 1-800-555-9999 to start saving!”
 
-Toll-free number (from .env)
+Buttons:
 
-Click-to-call button for mobile
+Call Now
 
-Callback form (name, phone, zip, category)
+See Providers
 
-Submits to Express backend → saves to Firestore /leads
+🧠 9. No Database or Backend Yet
 
-12. ✅ Acceptance Criteria
+All provider and pricing data lives in local src/data/providers.ts.
 
- Homepage lists all categories
+No login, registration, or record saving.
 
- User can browse billers by ZIP
+You’ll track customer calls and details manually in your own records/books.
 
- “Call Toll-Free to Enroll” visible on each biller
+✅ 10. Acceptance Criteria
 
- Customer registration assigns unique Customer Number
+ Website builds successfully via Vite
 
- Admin can upload receipts linked to bills
+ Responsive on mobile and desktop
 
- Receipts visible in customer portal
+ Hero, categories, provider cards, and CTA present
 
- All data stored in Firestore; files in Firebase Storage
+ No forms or backend logic
 
- Hosted securely on GoDaddy VPS
+ “Call Now” links open the toll-free number
 
-13. 🔒 Security Notes
-
-No sensitive data in client-side logs
-
-Use HTTPS with valid SSL on VPS
-
-Validate file uploads (PDF/JPG/PNG only)
-
-Limit admin routes with JWT + role check
-
-Sanitize inputs before sending to Firestore
-
-14. 📋 Next Steps for Codex
-
-Generate in order:
-
-/frontend/ → React + Tailwind structure + routes + Axios setup
-
-/backend/ → Express routes + Firebase Admin SDK setup
-
-Firestore integration for customers, billers, bills, receipts
-
-JWT auth system
-
-Admin dashboard + receipt upload flow
+ Clean, attractive, modern design ready for demo
