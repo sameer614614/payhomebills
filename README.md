@@ -1,101 +1,40 @@
-our domain is paybillswithuscom on godaady
+# PayBillsWithUs Marketing Site
 
-ChatGPT said:
-🌐 US Bills Hub — Simple Static Website (No Login, No Admin, No Records)
+A modern, responsive single-page application built with Vite, React, TypeScript, and Tailwind CSS. The site showcases Internet,
+Home Services, TV & Cable, and Electric bill providers while encouraging visitors to call the toll-free concierge line for a
+guaranteed 25% monthly savings.
 
-Goal: Build a modern, responsive promotional website where U.S. users can explore bill categories — Internet, Home, TV, and Electric — view major providers, and be encouraged to call the toll-free number to get 25% off every month.
+## ✨ Features
 
-No registration, login, or admin panel.
-No database writes or backend logic except for static content (you’ll record everything manually in your books).
+- Hero section with bold messaging, proof points, and a concierge explainer.
+- Interactive category tabs and provider cards powered by local TypeScript data.
+- Toll-free call-to-action block optimized for conversions.
+- FAQ accordion answering common enrollment questions.
+- Mobile-first, responsive layout with glassmorphism styling.
+- Static assets only — no forms, databases, or authentication.
 
-The site’s purpose is purely marketing and lead-generation — clear, fast, attractive, and mobile-friendly.
+## 🚀 Tech Stack
 
+- [Vite](https://vitejs.dev/) + [React](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/) for styling and custom utility classes.
+- [lucide-react](https://lucide.dev/) icons for lightweight SVGs.
 
-1. Project Summary
+## 📦 Getting Started
 
-Show 4 main categories:
+```bash
+npm install
+npm run dev
+```
 
-Internet Bills
+The development server runs on <http://localhost:5173>. Use `npm run build` to create the production-ready static assets and
+`npm run preview` to serve the build locally. Run `npm run lint` any time you want a quick TypeScript sanity check without
+building the bundle.
 
-Home Services
+## 📁 Local Data Source
 
-TV & Cable
+All provider, category, and FAQ content lives in [`src/data/providers.ts`](./src/data/providers.ts). Update this file to refresh
+pricing or add new plans — no backend required.
 
-Electric Bills
+## 📞 Toll-Free Number
 
-For each category:
-
-Display logos & plan highlights of major U.S. carriers (Comcast, AT&T, Verizon, Spectrum, etc.)
-
-Show pricing and “25% OFF” badge
-
-Prominent “Call Toll-Free Now” button
-
-Simple static content — no payment forms, no database forms, no registration.
-
-Site includes:
-
-Hero banner
-
-Category tabs
-
-Provider cards grid
-
-Toll-free section (call-to-action)
-
-FAQs and contact footer
-
-🛠️ 2. Tech Stack
-Layer	Tech	Notes
-Frontend	Vite + React + TypeScript	Fast, modular SPA
-Styling	Tailwind CSS + shadcn/ui (optional)	Modern, responsive design
-Hosting	GoDaddy VPS	Serve static files via Nginx
-Assets	Local /public folder	Store images/logos locally
-No backend	—	Static build only (no Express, no database yet)
-
-
-
-🏗️ 3. Folder Structure
-🖥️ 4. Page Layouts
-📞 5. Toll-Free Call-to-Action Block
-⚙️ 6. Environment Variables (if any)
-🚀 7. Deployment on GoDaddy VPS
-
-8. Example Homepage Text
-
-Headline:
-
-“Pay Your Monthly Bills the Smart Way — Get 25% OFF everymonth on Internet, Home, TV, and Electric Bills!”
-
-Sub-text:
-
-“We handle your bill payments so you save more every month.
-Call us now at 1-800-555-9999 to start saving!”
-
-Buttons:
-
-Call Now
-
-See Providers
-
-🧠 9. No Database or Backend Yet
-
-All provider and pricing data lives in local src/data/providers.ts.
-
-No login, registration, or record saving.
-
-You’ll track customer calls and details manually in your own records/books.
-
-✅ 10. Acceptance Criteria
-
- Website builds successfully via Vite
-
- Responsive on mobile and desktop
-
- Hero, categories, provider cards, and CTA present
-
- No forms or backend logic
-
- “Call Now” links open the toll-free number
-
- Clean, attractive, modern design ready for demo
+All "Call Now" buttons dial **1-800-555-9999**, keeping the primary conversion path consistent across the site.
