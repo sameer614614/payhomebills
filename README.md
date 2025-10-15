@@ -27,7 +27,8 @@ npm run dev
 ```
 
 The development server runs on <http://localhost:5173>. Use `npm run build` to create the production-ready static assets and
-`npm run preview` to serve the build locally.
+`npm run preview` to serve the build locally. Run `npm run lint` any time you want a quick TypeScript sanity check without
+building the bundle.
 
 ## 📁 Local Data Source
 
