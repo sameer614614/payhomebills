@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+body {
+  @apply bg-slate-950 text-slate-100 font-sans antialiased;
+}
+
+a {
+  @apply text-primary-300 transition-colors hover:text-primary-200;
+}
+
+.section-title {
+  @apply text-3xl md:text-4xl font-display font-semibold tracking-tight text-white;
+}
+
+.section-subtitle {
+  @apply text-slate-300 text-lg;
+}
+
+.glass-panel {
+  @apply backdrop-blur-xl bg-white/5 border border-white/10 shadow-xl;
+}
+
+.badge {
+  @apply inline-flex items-center gap-1 rounded-full bg-primary-500/10 px-3 py-1 text-sm font-medium text-primary-200;
+}
